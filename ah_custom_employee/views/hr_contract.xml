@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="ah_hr_contract_form_view" model="ir.ui.view">
+            <field name="name">ah.hr.contract.form.view</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="c2p_payroll_customization.hr_contract_view_form_inherit_structure_type"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='officiating']" position="before">
+                    <field name="basic_salary"/>
+                </xpath>
+                <xpath expr="//field[@name='conveyance_allow']" position="after">
+                    <field name="adhoc_allownce_1"/>
+                    <field name="adhoc_allownce_2"/>
+                    <field name="adhoc_allownce_3"/>
+                </xpath>
+                <xpath expr="//field[@name='mobile_allow']" position="after">
+                    <field name="other_allow"/>
+                </xpath>
+                <xpath expr="//field[@name='hospital_deduction']" position="after">
+                    <field name="income_tax_ded"/>
+                    <field name="house_building_loan_ded"/>
+                    <field name="loan_against_salary_ded"/>
+                    <field name="epf_loan_ded"/>
+                    <field name="other_ded"/>
+                    <field name="total_deductions"/>
+                    <field name="net_salary"/>
+                </xpath>
+                 <xpath expr="//field[@name='pf_deduction']" position="attributes">
+                     <attribute name="string">EPF Deduction</attribute>
+                </xpath>
+
+<!--                <xpath expr="//div[@name='adhoc_allow']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//div[@name='adhoc_allow']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//div[@name='adhoc_allow_2']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//div[@name='adhoc_allow_3']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//div[@name='adhoc_allow_4']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+            </field>
+        </record>
+
+    </data>
+</odoo>

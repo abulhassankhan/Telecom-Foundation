@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="ah_model_access_helpdesk_ticket" model="ir.model.access">
+            <field name="name">ah.model.access.helpdesk.ticket</field>
+            <field name="model_id" ref="sh_all_in_one_helpdesk.model_sh_helpdesk_ticket"/>
+            <field name="group_id" ref="sh_all_in_one_helpdesk.helpdesk_group_user"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record>
+
+        <record model="ir.rule" id="ah_sh_helpdesk_ticket_assigned_user_rule">
+            <field name="name">Helpdesk Ticket Assigned User</field>
+            <field name="model_id" ref="sh_all_in_one_helpdesk.model_sh_helpdesk_ticket" />
+            <field name="global" eval="True" />
+            <!-- <field name="domain_force">['|','|',('user_id','=',user.id),('user_id','=',False),('sh_user_ids','in',[user.id])]</field> -->
+            <field name="domain_force">[('create_uid', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('sh_all_in_one_helpdesk.helpdesk_group_user'))]" />
+        </record>
+
+    </data>
+</odoo>

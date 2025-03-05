@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="ah_crm_lead_view_form" model="ir.ui.view">
+            <field name="name">ah.crm.lead.view.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lost_reason_id']" position="after">
+                    <label for="system_size" string="System Size"/>
+                    <div class="o_row o_row_readonly">
+                        <field name="system_size"/>
+                        <field name="uom_id"/>
+                    </div>
+                    <field name="system_type" required="1"/>
+                    <field name="mobile_number"/>
+                    <field name="pkg_qty"/>
+                    <field name="address"/>
+                    <field name="region"/>
+                    <field name="pre_bid_meeting"/>
+                    <field name="pre_bid_meeting_date" attrs="{'invisible': [('pre_bid_meeting', '=', False)]}"/>
+                    <field name="tender_submission_date"/>
+                    <field name="tender_opening_date"/>
+                    <field name="tender_publish_date"/>
+                </xpath>
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <field name="tender_document_fee"/>
+                    <field name="tender_document_amount" attrs="{'invisible': [('tender_document_fee', '=', False)]}"/>
+                    <field name="bid_security_amount"/>
+                    <field name="tender_no_employer"/>
+                    <field name="performance_security"/>
+                    <field name="ps_no_of_days"/>
+                    <field name="advance_payment_guarantee"/>
+                    <field name="apg_no_of_days"/>
+                    <field name="tender_payment_terms"/>
+                    <field name="project_duration"/>
+                    <field name="sub_process"/>
+                    <field name="sub_stage_id" domain="[('stage_id', '=', stage_id)]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="ah_crm_lead_quick_create_view_form" model="ir.ui.view">
+            <field name="name">ah.crm.lead.quick.create.view.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.quick_create_opportunity_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='phone']" position="before">
+                    <field name="system_type"/>
+                    <label for="system_size" string="System Size"/>
+                    <div class="o_row o_row_readonly">
+                        <field name="system_size"/>
+                        <field name="uom_id"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="ah_crm_lead_search_view" model="ir.ui.view">
+            <field name="name">ah.crm.lead.search.view</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='assigned_to_me']" position="after">
+                    <filter string="Government" name="government_leads" domain="[('system_type', '=', 'government')]"/>
+                    <filter string="Residential" name="residential_leads" domain="[('system_type', '=', 'residential')]"/>
+                    <filter string="Corporate" name="corporate_leads" domain="[('system_type', '=', 'corporate')]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="ah_action_crm_government" model="ir.actions.act_window">
+            <field name="name">Government</field>
+            <field name="res_model">crm.lead</field>
+            <field name="view_mode">tree,graph,pivot,form,calendar,activity,kanban</field>
+            <field name="domain">[('type','=','opportunity')]</field>
+            <field name="context">{
+                    'default_type': 'opportunity',
+                    'default_system_type': 'government',
+                    'search_default_government_leads': 1,
+                    'search_default_stage': 1
+            }</field>
+            <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+        </record>
+
+        <record id="ah_action_crm_residential" model="ir.actions.act_window">
+            <field name="name">Residential</field>
+            <field name="res_model">crm.lead</field>
+            <field name="view_mode">tree,graph,pivot,form,calendar,activity,kanban</field>
+            <field name="domain">[('type','=','opportunity')]</field>
+            <field name="context">{
+                    'default_type': 'opportunity',
+                    'default_system_type': 'residential',
+                    'search_default_residential_leads': 1,
+                    'search_default_stage': 1
+            }</field>
+            <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+        </record>
+
+        <record id="ah_action_crm_corporate" model="ir.actions.act_window">
+            <field name="name">Corporate</field>
+            <field name="res_model">crm.lead</field>
+            <field name="view_mode">tree,graph,pivot,form,calendar,activity,kanban</field>
+            <field name="domain">[('type','=','opportunity')]</field>
+            <field name="context">{
+                    'default_type': 'opportunity',
+                    'default_system_type': 'corporate',
+                    'search_default_corporate_leads': 1,
+                    'search_default_stage': 1
+            }</field>
+            <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+        </record>
+
+        <menuitem
+            id="menu_crm_government"
+            name="Government"
+            parent="crm.crm_menu_root"
+            action="ah_action_crm_government"
+        />
+
+        <menuitem
+            id="menu_crm_residential"
+            name="Residential"
+            parent="crm.crm_menu_root"
+            action="ah_action_crm_residential"
+        />
+
+        <menuitem
+            id="menu_crm_corporate"
+            name="Corporate"
+            parent="crm.crm_menu_root"
+            action="ah_action_crm_corporate"
+        />
+
+    </data>
+</odoo>

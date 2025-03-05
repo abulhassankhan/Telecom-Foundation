@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="ah_account_move_vendor_bill_view_form" model="ir.ui.view">
+            <field name="name">ah.account.move.vendor.bill.view.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='journal_div']" position="after">
+                    <field name="cheque_number" attrs="{'invisible': [('move_type', 'not in', ('in_invoice', 'entry'))]}"/>
+                    <field name="bpv_number" attrs="{'invisible': [('move_type', 'not in', ('in_invoice', 'entry'))]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="ah_account_move_view_tree" model="ir.ui.view">
+            <field name="name">ah.account.move.view.tree</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="cheque_number"/>
+                    <field name="bpv_number" string="Reference"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

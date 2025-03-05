@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="ah_project_task" model="ir.ui.view">
+            <field name="name">ah.project.task</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.quick_create_task_form"/>
+            <field name="arch" type="xml">
+<!--                <xpath expr="//field[@name='project_id']" position="replace">-->
+<!--                    <field name="project_id" readonly="1" widget="project_private_task" invisible="context.get('default_project_id', False)" placeholder="Private" class="o_project_task_project_field"/>-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='project_id']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="ah_project_task_view_tree_inherit" model="ir.ui.view">
+            <field name="name">ah.project.task.view.tree.inherit</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="sm_custom_project_apps.project_task_view_tree_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='kra_check']" position="after">
+                    <field name="priority_check"/>
+                </xpath>
+                <xpath expr="//field[@name='priority'][2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='kra_check']" position="replace">
+                    <field name="kpi_description"/>
+                </xpath>
+                <xpath expr="//field[@name='percentage']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="ah_project_task_view_form" model="ir.ui.view">
+            <field name="name">ah.project.task.view.form</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="sm_custom_project_apps.project_task_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='kra_question_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='project_task_hr_kra_ids']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                    <attribute name="force_save">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='task_weightage']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('parent_id', '!=', False)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='marks']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('parent_id', '!=', False)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='remarks']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('parent_id', '!=', False)]}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_open_task']" position="replace">
+                    <button name="action_open_task" type="object" title="View Task" string="View Task"/>
+                </xpath>
+                <xpath expr="//field[@name='kra_type_ids']" position="replace">
+                    <field name="kra_type_ids" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="ah_project_task_view_form_readonly" model="ir.ui.view">
+            <field name="name">ah.project.task.view.form.readonly</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="sm_custom_project_apps.project_task_view_form_readonly"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='project_id']" position="replace">
+                    <field name="project_id"
+                           placeholder="Private"
+                           domain="[('active', '=', True), ('company_id', '=', company_id)]"
+                           attrs="{'invisible': [('parent_id', '!=', False)]}"
+                           readonly="1"
+                           widget="project_private_task"
+                    />
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="ah_view_task_form2" model="ir.ui.view">
+            <field name="name">ah.view.task.form2</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='display_project_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='project_id']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('parent_id', '!=', False)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='project_id']" position="after">
+                    <field name="parent_task_id" attrs="{'invisible': [('parent_id', '=', False)]}"/>
+                </xpath>
+                <xpath expr="//notebook" position="attributes">
+                    <attribute name="attrs">{'invisible': [('parent_id', '!=', False)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='task_properties']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+<!--                <xpath expr="//field[@name='project_id']" position="after">-->
+<!--                    <field name="parent_id" attrs="{'invisible': [('parent_id', '=', False)]}"/>-->
+<!--                </xpath>-->
+                <xpath expr="//form/sheet/notebook/page[@name='sub_tasks_page']/field[@name='child_ids']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('is_readonly', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='remarks']" position="after">
+                    <field name="show_user_ids" readonly="1" force_save="1" widget="many2many_tags" attrs="{'invisible': [('parent_id', '!=', False)]}"/>
+                    <field name="is_readonly" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="ah_employee_own_project_tasks" model="ir.rule">
+            <field name="name">Employee Own Tasks</field>
+            <field name="model_id" ref="model_project_task"/>
+            <field name="domain_force">['|', '|', ('show_user_ids', 'in', user.id), ('employee_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
+        </record>
+
+    </data>
+</odoo>

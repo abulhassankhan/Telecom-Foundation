@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_crm_region,crm.region,model_crm_region,base.group_user,1,1,1,1
+access_crm_sub_stage,crm.sub.stage,model_crm_sub_stage,base.group_user,1,1,1,1

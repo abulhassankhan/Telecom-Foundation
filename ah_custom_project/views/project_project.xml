@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="ah_project_project_view_form" model="ir.ui.view">
+            <field name="name">ah.project.project.view.form</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="sm_custom_project_apps.project_project_view_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='status']" position="after">
+                    <field name="default_user_ids" widget="many2many_tags" invisible="1"/>
+                    <field name="user_ids" widget="many2many_tags" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='kra_type_ids']" position="replace">
+                    <field name="kra_type_ids"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="ah_view_project_kanban" model="ir.ui.view">
+            <field name="name">ah.viw.project.kanban</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('o_project_kanban_main')]" position="after">
+                    <div class="o_kanban_primary_left">
+<!--                        <div class="o_primary">-->
+<!--                            <span style="display:inline;">Task Weightage: </span>-->
+<!--                            <span><field name="task_weightage_count"/></span>-->
+<!--                        </div>-->
+                        <div class="o_primary">
+                            <span style="display:inline;">Progress: </span>
+                            <span><field name="progress_count"/></span>
+                            <span>%</span>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="ah_project_project_view_kanban_inherit" model="ir.ui.view">
+            <field name="name">ah.project.project.view.kanban.inherit</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="sm_custom_project_apps.project_project_view_kanban_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='percentage']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+<!--        <record id="ah_employee_own_project_project" model="ir.rule">-->
+<!--            <field name="name">Employee Own Projects</field>-->
+<!--            <field name="model_id" ref="model_project_project"/>-->
+<!--            <field name="domain_force">['|', '|', '|', ('default_user_ids', 'in', user.id), ('user_ids', 'in', user.id), ('create_uid', '=', user.id), ('manager.user_id', '=', user.id)]</field>-->
+<!--        </record>-->
+    </data>
+</odoo>

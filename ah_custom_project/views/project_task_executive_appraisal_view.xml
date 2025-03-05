@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="ah_project_task_executive_appraisal_view_form" model="ir.ui.view">
+            <field name="name">ah.project.task.executive.appraisal.view.form</field>
+            <field name="model">project.task.executive.appraisal</field>
+            <field name="inherit_id" ref="sm_custom_project_apps.project_task_executive_appraisal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page" position="before">
+                    <page string="Total">
+                        <group>
+                            <group>
+                                <label for="total_marks_obtain" string="Marks"/>
+                                <div class="d-flex flex-row align-items-start">
+                                    <field name="total_marks_obtain"/>
+                                    <field name="slash" readonly="1"/>
+                                    <field name="total_out_of_marks"/>
+                                </div>
+                                <field name="total_grade"/>
+                            </group>
+                        </group>
+                        <group string="Appraiser Review">
+<!--                            <div class="d-flex flex-row align-items-start">-->
+                                <field name="appraiser_review"/>
+<!--                            </div>-->
+                        </group>
+                        <group string="Reviewers Evaluation">
+<!--                            <div class="d-flex flex-row align-items-start">-->
+                                <field name="reviewer_evaluation"/>
+<!--                            </div>-->
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

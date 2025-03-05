@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="ah_hr_job_case_form_view_inherit" model="ir.ui.view">
+            <field name="name">ah.hr.job.case.form.view.inherit</field>
+            <field name="model">hr.job.case</field>
+            <field name="inherit_id" ref="sm_custom_recruitment_apps.hr_job_case_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="replace">
+                    <field name="name" required="True" readonly="1" force_save="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="ah_hr_job_case_kanban_view_inherit" model="ir.ui.view">
+            <field name="name">ah.hr.job.case.kanban.view.inherit</field>
+            <field name="model">hr.job.case</field>
+            <field name="inherit_id" ref="sm_custom_recruitment_apps.hr_job_case_kanban_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div//div" position="replace">
+                    <div>
+                        <strong class="header1"><field name="job_positions_id" /> (<field name="name" />)</strong>
+                    </div>
+                </xpath>
+                <xpath expr="//div//div[2]" position="replace">
+                    <div>
+                        <strong class="header2"><field name="case_positions" /></strong>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

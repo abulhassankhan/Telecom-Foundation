@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="ah_sale_res_partner_form_view" model="ir.ui.view">
+            <field name="name">ah.sale.res.partner.form.view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <field name="customer_rank" invisible="1"/>
+                    <field name="is_rent" attrs="{'invisible': [('customer_rank', '&lt;', 1)]}"/>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Rental Information" attrs="{'invisible': [('is_rent', '=', False)]}">
+                        <group>
+                            <group>
+                                <field name="rent_per_month"/>
+                                <field name="number_of_months"/>
+                                <field name="increase_in_rent"/>
+                            </group>
+                            <group>
+                                <field name="total_rent"/>
+                                <field name="total_rent_after_increase"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="ah_hr_employee_form_view" model="ir.ui.view">
+            <field name="name">ah.hr.employee.form.view</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="sm_custom_project_apps.hr_employee_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='acting_charge_held']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='acting_charge_held']" position="after">
+                    <field name="acting_charge_held2"/>
+                    <field name="additional_charge_held"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

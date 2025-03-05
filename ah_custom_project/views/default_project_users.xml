@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="view_project_default_user_tree" model="ir.ui.view">
+            <field name="name">view.project.default.user.tree</field>
+            <field name="model">project.default.users</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="user_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_project_default_user" model="ir.actions.act_window">
+            <field name="name">Default Users</field>
+            <field name="res_model">project.default.users</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem
+            id="menu_project_default_user"
+            name="Project Default Users"
+            parent="project.menu_project_config"
+            action="action_project_default_user"
+        />
+
+    </data>
+</odoo>
