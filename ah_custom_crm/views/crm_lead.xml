@@ -67,6 +67,9 @@
                     <filter string="Residential" name="residential_leads" domain="[('system_type', '=', 'residential')]"/>
                     <filter string="Corporate" name="corporate_leads" domain="[('system_type', '=', 'corporate')]"/>
                 </xpath>
+                <xpath expr="//group//filter[@name='stage']" position="after">
+                    <filter string="Sub Stage" name="sub_stage" context="{'group_by':'sub_stage_id'}"/>
+                </xpath>
             </field>
         </record>
 
@@ -79,7 +82,8 @@
                     'default_type': 'opportunity',
                     'default_system_type': 'government',
                     'search_default_government_leads': 1,
-                    'search_default_stage': 1
+                    'search_default_stage': 1,
+                    'search_default_sub_stage': 1
             }</field>
             <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
         </record>
@@ -93,7 +97,8 @@
                     'default_type': 'opportunity',
                     'default_system_type': 'residential',
                     'search_default_residential_leads': 1,
-                    'search_default_stage': 1
+                    'search_default_stage': 1,
+                    'search_default_sub_stage': 1
             }</field>
             <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
         </record>
@@ -107,7 +112,8 @@
                     'default_type': 'opportunity',
                     'default_system_type': 'corporate',
                     'search_default_corporate_leads': 1,
-                    'search_default_stage': 1
+                    'search_default_stage': 1,
+                    'search_default_sub_stage': 1,
             }</field>
             <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
         </record>
