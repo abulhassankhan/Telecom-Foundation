@@ -38,6 +38,40 @@
                     <field name="sub_process"/>
                     <field name="sub_stage_id" domain="[('stage_id', '=', stage_id)]"/>
                 </xpath>
+                <xpath expr="//page[@name='lead']" position="after">
+                     <page string="Survey Form">
+                         <group>
+                             <group>
+                                 <field name="load"/>
+                                 <field name="genset_rating"/>
+                                 <field name="bus_bar_size"/>
+                                 <field name="disco_breaker"/>
+                                 <field name="main_cable_size"/>
+                                 <field name="main_db"/>
+                                 <field name="distance_lt_to_ph"/>
+                                 <field name="net_metering"/>
+                                 <field name="structure_type"/>
+                                 <field name="pfi_panel"/>
+                                 <field name="genset_breaker"/>
+                             </group>
+                             <group>
+                                 <field name="sub_main_cable"/>
+                                 <field name="sub_main_db"/>
+                                 <field name="load_type"/>
+                                 <field name="sanctioned_load"/>
+                                 <field name="allowed_kw"/>
+                                 <field name="termination"/>
+                                 <field name="roof_type"/>
+                                 <field name="approx_roof_area"/>
+                                 <field name="proposed_size"/>
+                                 <field name="aprrox_ac_solar_cable"/>
+                             </group>
+                         </group>
+                         <group col="12" string="Comments">
+                             <field name="comment" placeholder="Comments" colspan="12" nolabel="1"/>
+                         </group>
+                     </page>
+                </xpath>
             </field>
         </record>
 

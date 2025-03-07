@@ -47,3 +47,31 @@ class CrmLead(models.Model):
     sub_process = fields.Char('Submission Process')
 
     sub_stage_id = fields.Many2one('crm.sub.stage', 'Sub Stage')
+
+
+    # Survey Form
+
+    load = fields.Char('Load')
+    genset_rating = fields.Char('Genset Rating/Type')
+    bus_bar_size = fields.Char('Bus Bar Size')
+    disco_breaker = fields.Char('Disco Breaker')
+    main_cable_size = fields.Char('Main Cable Size')
+    main_db = fields.Char('Main DB')
+    distance_lt_to_ph = fields.Char('Distance (LT Panel to Power House)')
+    net_metering = fields.Char('Net Metering')
+    structure_type = fields.Char('Net Metering')
+    pfi_panel = fields.Char('PFI Panel')
+    genset_breaker = fields.Char('Genset Breaker')
+
+    sub_main_cable = fields.Char('Sub Main Cable')
+    sub_main_db = fields.Char('Sub Main DB')
+    load_type = fields.Char('Load Type')
+    sanctioned_load = fields.Char('Sanctioned Load')
+    allowed_kw = fields.Char('Allowed KW')
+    termination = fields.Char('Termination (LT/HT)')
+    roof_type = fields.Char('Roof Type')
+    approx_roof_area = fields.Char('Approx. Roof Area')
+    proposed_size = fields.Char('Proposed Size')
+    aprrox_ac_solar_cable = fields.Char('Approx. AC Solar Cable')
+
+    comment = fields.Html('Comment')
