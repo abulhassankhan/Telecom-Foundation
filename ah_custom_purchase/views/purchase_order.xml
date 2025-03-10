@@ -5,20 +5,79 @@
         <field name="model">purchase.order</field>
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
- 		<notebook position="inside">
-                <page string="Comparative Vendors Process">
-                    <field name="comparative_line_ids" widget="one2many_list" mode="tree">
-                        <tree editable="bottom">
-                            <field name="is_selected"/>
-                            <field name="vendor_id"/>
-                            <field name="product_id"/>
-                            <field name="quantity"/>
-                            <field name="price_unit"/>
-                            <field name="po_id" widget="many2one_tags" readonly="1"/>
-                        </tree>
-                    </field>
-                </page>
-            </notebook>
-	</field>
+            <xpath expr="//field[@name='partner_ref']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='currency_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//div[@name='reminder']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='purchase_delivery_invoice']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//notebook" position="after">
+                <notebook>
+                    <page string="Comparative Statement" name="alternative_pos">
+                        <group>
+                            <group>
+                                <p colspan="2">Create a call for tender by adding alternative request for quotations to different vendors.
+                                Make your choice by selecting the best combination of lead time, OTD and/or total amount.
+                                By comparing product lines you can also decide to order some products from one vendor and others from another vendor.</p>
+                            </group>
+                            <group>
+                                <p colspan="2">
+                                    <button name="action_create_alternative" type="object" class="btn-link d-block" string="Create Alternative" icon="fa-copy"/>
+                                    <button name="action_compare_alternative_lines" type="object" class="btn-link d-block" string="Compare Product Lines" icon="fa-bar-chart" attrs="{'invisible': [('alternative_po_ids', '=', [])]}"/>
+                                </p>
+                            </group>
+                        </group>
+                        <field name="alternative_po_ids" attrs="{'readonly': [('id', '=', False)]}" widget="many2many_alt_pos" context="{'quotation_only': True}">
+                            <tree string="Alternative Purchase Order" decoration-muted="state in ['cancel', 'purchase', 'done']" decoration-bf="id == parent.id">
+                                <control>
+                                    <create string="Link to Existing RfQ"/>
+                                </control>
+                                <field name="partner_id"/>
+                                <field name="name" string="Reference"/>
+                                <field name="date_planned"/>
+                                <field name="amount_total"/>
+                                <field name="state"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
     </record>
+
+
+    <record id="ah_purchase_req_purchase_order_view_form_inherit" model="ir.ui.view">
+        <field name="name">ah.purchase.req.purchase.order.view.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase_requisition.purchase_order_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='requisition_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='alternative_pos']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="ah_sh_helpdesk_purchase_order_view_form_inherit" model="ir.ui.view">
+        <field name="name">ah.sh.helpdesk.purchase.order.view.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="sh_all_in_one_helpdesk.sh_helpdesk_ticket_po_inherited_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sh_purchase_ticket_ids']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_create_purchase_ticket']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>

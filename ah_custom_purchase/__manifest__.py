@@ -9,12 +9,13 @@
     'category': 'Abul Hassan',
     'version': '0.1',
 
-    'depends':['purchase', 'base'],
+    'depends':['purchase', 'base', 'purchase_requisition', 'sh_all_in_one_helpdesk'],
 
     'data': [
         'views/purchase_order.xml',
-        # 'views/pms_report_view.xml',
-        #
-        'security/ir.model.access.csv'
+
+        'data/sequences.xml',
+
+        # 'security/ir.model.access.csv'
     ],
 }
