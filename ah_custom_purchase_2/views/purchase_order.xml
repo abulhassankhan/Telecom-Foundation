@@ -1,0 +1,85 @@
+<odoo>
+    <record id="view_purchase_order_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header//field[@name='state']" position="replace">
+                <field name="state" widget="statusbar"
+                       statusbar_visible="draft,
+                       sent,
+                       comparative,
+                       approval_1,
+                       approval_2,
+                       purchase,
+                       "/>
+            </xpath>
+	    <xpath expr="//header" position="inside">
+                <button name="action_approval_1" type="object" string="Move for Approval" class="btn-primary" attrs="{'invisible': [('state', 'not in', ('draft','comparative', 'sent', 'email', 'received'))]}"/>
+                <button name="action_approval_2" type="object" string="Approve" class="btn-primary" attrs="{'invisible': [('state', 'not in', ('approval_1'))]}"/>
+
+                <button name="action_comparative" type="object" string="Comparative"
+                        class="btn-primary" attrs="{'invisible': [('state', 'not in', ('draft', 'sent'))]}"/>
+
+                <button name="action_received" type="object" string="Received"
+                        class="btn-primary" invisible="1"/>
+
+<!--                <button name="action_send_vendor_email" type="object" string="Send Email to Vendors"-->
+<!--                        class="btn-primary" icon="fa-envelope" invisible="state != 'comparative'"/>-->
+
+            </xpath>
+            <xpath expr="//button[@name='button_confirm'][1]" position="attributes">
+                <attribute name="states">approval_2</attribute>
+            </xpath>
+             <xpath expr="//button[@name='button_confirm'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <notebook position="inside">
+                <page string="Comparative Vendors Process">
+                    <field name="comparative_line_ids" widget="one2many_list" mode="tree">
+                        <tree editable="bottom">
+                            <field name="is_selected"/>
+                            <field name="vendor_id"/>
+                            <field name="product_id"/>
+                            <field name="quantity"/>
+                            <field name="price_unit"/>
+                            <field name="po_id" widget="many2one_tags" readonly="1"/>
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
+
+            <notebook position="inside">
+                <page string="Received Vendors Process">
+                    <field name="received_line_ids" widget="one2many_list" mode="tree">
+                        <tree editable="bottom">
+                            <field name="is_selected"/>
+                            <field name="vendor_id"/>
+                            <field name="product_id"/>
+                            <field name="quantity"/>
+                            <field name="price_unit"/>
+                            <field name="po_id" widget="many2one_tags" readonly="1"/>
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
+
+	 </field>
+    </record>
+
+
+    <record id="ah_sh_helpdesk_purchase_order_view_form_inherit" model="ir.ui.view">
+        <field name="name">ah.sh.helpdesk.purchase.order.view.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="sh_all_in_one_helpdesk.sh_helpdesk_ticket_po_inherited_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sh_purchase_ticket_ids']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_create_purchase_ticket']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
