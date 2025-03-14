@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="ah_hr_payroll_structure_view_form" model="ir.ui.view" >
+            <field name="name">salary.structure.form</field>
+            <field name="model">hr.payroll.structure</field>
+            <field name="inherit_id" ref="c2p_payroll_customization.model_salary_structure"/>
+            <field name="arch" type="xml">
+<!--                ******************** Allownces ***************-->
+
+                <xpath expr="//field[@name='mobile_allow']" position="after">
+                    <field name="other_allow"/>
+                </xpath>
+                <xpath expr="//field[@name='mobile_type']" position="after">
+                    <field name="other_allow_type" widget="radio" options="{'horizontal': true}" required="True"
+                                       no_label="1"/>
+                </xpath>
+
+<!--                ******************** Deductions ***************-->
+
+                <xpath expr="//field[@name='hospital_deduction']" position="after">
+                    <field name="income_tax_deduction"/>
+                    <field name="house_building_loan_deduction" string="HBL Deduction"/>
+                    <field name="loan_against_salary_deduction" string="LAS Deduction"/>
+                    <field name="epf_loan_deduction"  string="EPF Loan Deduction"/>
+                    <field name="other_deduction"/>
+                </xpath>
+                <xpath expr="//field[@name='hospital_type']" position="after">
+                    <field name="income_tax_type" widget="radio" options="{'horizontal': true}"
+                                       required="True" no_label="1"/>
+                    <field name="house_building_type" widget="radio" options="{'horizontal': true}"
+                                       required="True" no_label="1" string="HBL Type"/>
+                    <field name="loan_against_salary_type" widget="radio" options="{'horizontal': true}"
+                                       required="True" no_label="1" string="LAS Type"/>
+                    <field name="epf_loan_type" widget="radio" options="{'horizontal': true}"
+                                       required="True" no_label="1" string="EPF Loan Type"/>
+                    <field name="other_deduction_type" widget="radio" options="{'horizontal': true}"
+                                       required="True" no_label="1" string="Other Ded Type"/>
+                </xpath>
+                <xpath expr="//field[@name='pf_deduction']" position="attributes">
+                    <attribute name="string">EPF Deduction</attribute>
+                </xpath>
+                <xpath expr="//field[@name='pf_type']" position="attributes">
+                    <attribute name="string">EPF Type</attribute>
+                </xpath>
+
+
+            </field>
+        </record>
+    </data>
+</odoo>

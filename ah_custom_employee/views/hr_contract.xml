@@ -8,13 +8,13 @@
             <field name="inherit_id" ref="c2p_payroll_customization.hr_contract_view_form_inherit_structure_type"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='officiating']" position="before">
-                    <field name="basic_salary"/>
+                    <field name="wage" widget="float" string="Basic Pay"/>
                 </xpath>
-                <xpath expr="//field[@name='conveyance_allow']" position="after">
-                    <field name="adhoc_allownce_1"/>
-                    <field name="adhoc_allownce_2"/>
-                    <field name="adhoc_allownce_3"/>
-                </xpath>
+<!--                <xpath expr="//field[@name='conveyance_allow']" position="after">-->
+<!--                    <field name="adhoc_allownce_1"/>-->
+<!--                    <field name="adhoc_allownce_2"/>-->
+<!--                    <field name="adhoc_allownce_3"/>-->
+<!--                </xpath>-->
                 <xpath expr="//field[@name='mobile_allow']" position="after">
                     <field name="other_allow"/>
                 </xpath>
