@@ -5,14 +5,58 @@
         <field name="model">purchase.order</field>
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
+<!--            ______________header________________-->
+
+             <xpath expr="//header" position="inside">
+                 <button name="action_approval_1" type="object" string="Send for Approval" class="btn-primary" attrs="{'invisible': [('state', 'not in', ('purchase'))]}"/>
+                 <button name="action_approval_2" type="object" string="Approve" class="btn-primary" attrs="{'invisible': [('state', 'not in', ('approval_1'))]}"/>
+                 <button name="action_approved" type="object" string="Approve" class="btn-primary" attrs="{'invisible': [('state', 'not in', ('approval_2'))]}"/>
+             </xpath>
+             <xpath expr="//button[@name='button_cancel']" position="attributes">
+                 <attribute name="states">"draft,to approve,sent,purchase,approval_1,approval_2</attribute>
+             </xpath>
+             <xpath expr="//header//field[@name='state']" position="replace">
+                <field name="state" widget="statusbar" statusbar_visible="draft,sent,purchase,approval_1,approval_2,approved"/>
+            </xpath>
+            <xpath expr="//button[@name='action_create_invoice']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', ('state', 'not in', ('approved')), ('invoice_status', 'in', ('no', 'invoiced'))]}</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_create_invoice'][2]" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', '|', ('state', 'not in', ('approved')), ('invoice_status', 'not in', ('no', 'invoiced')), ('order_line', '=', [])]}</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_rfq_send'][3]" position="attributes">
+                <attribute name="states"/>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//header//button[@name='confirm_reminder_mail']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+<!--            __________________fields__________________-->
+
             <xpath expr="//field[@name='partner_ref']" position="attributes">
                 <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_order']" position="attributes">
+                <attribute name="attrs">{'invisible': [('state','in',('purchase','done', 'approval_1', 'approval_2', 'approved'))]}</attribute>
+            </xpath>
+            <xpath expr="//label[@for='date_approve']" position="attributes">
+                <attribute name="attrs">{'invisible': [('state','not in',('purchase','done', 'approval_1', 'approval_2', 'approved'))]}</attribute>
+                <attribute name="string">PO Date</attribute>
+            </xpath>
+            <xpath expr="//div[@name='date_approve']" position="attributes">
+                <attribute name="attrs">{'invisible': [('state','not in',('purchase','done', 'approval_1', 'approval_2', 'approved'))]}</attribute>
             </xpath>
             <xpath expr="//field[@name='currency_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//div[@name='reminder']" position="attributes">
                 <attribute name="invisible">1</attribute>
+            </xpath>
+
+<!--            _________________notebook________________-->
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'in', ('done', 'approval_1', 'approval_2', 'approved', 'cancel'))]}</attribute>
             </xpath>
             <xpath expr="//page[@name='purchase_delivery_invoice']" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -63,6 +107,9 @@
             <xpath expr="//page[@name='alternative_pos']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|', ('is_quantity_copy', '=', 'none'), ('state', 'in', ['purchase', 'done', 'approval_1', 'approval_2', 'approved', 'cancel'])]}</attribute>
+            </xpath>
         </field>
     </record>
 
@@ -76,6 +123,17 @@
             </xpath>
             <xpath expr="//button[@name='action_create_purchase_ticket']" position="attributes">
                 <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="ah_purchase_stock_purchase_order_view_form_inherit" model="ir.ui.view">
+        <field name="name">ah.purchase.stock.purchase.order.view.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase_stock.purchase_order_view_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_view_picking']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', '|' , ('is_shipped', '=', True), ('state','not in', ('approved')), ('incoming_picking_count', '=', 0)]}</attribute>
             </xpath>
         </field>
     </record>
