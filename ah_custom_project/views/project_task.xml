@@ -63,6 +63,15 @@
                 <xpath expr="//field[@name='kra_type_ids']" position="replace">
                     <field name="kra_type_ids" invisible="1"/>
                 </xpath>
+                <xpath expr="//field[@name='task_weightage']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('active_employee', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='marks']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('active_employee', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='remarks']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('active_employee', '=', True)]}</attribute>
+                </xpath>
             </field>
         </record>
 
