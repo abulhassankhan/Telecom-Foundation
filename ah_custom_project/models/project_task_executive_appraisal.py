@@ -50,7 +50,7 @@ class ProjectTaskExecutiveAppraisal(models.Model):
             rec.total_grade = grade
 
 
-    @api.constrains('employee_id')
+    @api.constrains('employee_id', 'from_date', 'to_date')
     def constrains_employee_id(self):
         for record in self:
             record.project_task_executive_appraisal_kra_ids.unlink()
@@ -68,14 +68,14 @@ class ProjectTaskExecutiveAppraisal(models.Model):
                     kpi_ids = employee_kra.kra_question_ids
                     
                     from_datetime = datetime.combine(self.from_date, datetime.min.time())  # Converts to datetime at 00:00:00
-                    to_datetime = datetime.combine(self.to_date, datetime.min.time())
+                    to_datetime = datetime.combine(self.to_date, datetime.max.time())
                     
                     total_tasks = self.env['project.task'].sudo().search([
                         ('employee_id', '=', self.employee_id.id),
                         ('start_date', '>=', from_datetime),
                         ('end_date', '<=', to_datetime)
                     ])
-                    print(len(total_tasks), 'total_tasks')
+
                     for kpi in kpi_ids:
                         kpi_tasks = self.env['project.task'].sudo().search([
                             ('employee_id', '=', self.employee_id.id),
@@ -99,7 +99,7 @@ class ProjectTaskExecutiveAppraisal(models.Model):
                             kpi_line.write({
                                 'marks_of_out': (kpi_line.kra_weightage / 100) * 50,
                             })
-                            print(total_marks_percent,'total_marks_percent')
+
                             kpi_line.write({
                                 'marks': (kpi_line.marks_of_out * total_marks_percent) / 100
                             })

@@ -1,16 +1,21 @@
 from odoo import api,fields,models
 from odoo.exceptions import UserError
+from datetime import datetime
+
 
 class PmsReport(models.Model):
     _name = 'pms.report'
     _rec_name = 'employee_id'
 
+    from_date = fields.Date('From Date')
+    to_date = fields.Date('To Date')
     kpi_type_id = fields.Many2one('kra.type', 'Department')
     # kpi_ids = fields.Many2one('employee.kra.question', 'KPI')
     key_perfomance_ids = fields.Many2many('employee.kra.question', string='KPIs')
     employee_id = fields.Many2one('hr.employee', 'Employee')
     department_id = fields.Many2one('hr.department', 'Hr Department')
     pms_report_lines = fields.One2many('pms.report.lines', 'pms_report_id')
+
 
     @api.onchange('kpi_type_id')
     def onchange_department_id(self):
@@ -27,13 +32,20 @@ class PmsReport(models.Model):
     def compute_report(self):
         # if self.pms_report_lines:
         self.pms_report_lines.unlink()
-        total_tasks = self.env['project.task'].search([
-                ('employee_id', '=', self.employee_id.id)
+        from_datetime = datetime.combine(self.from_date, datetime.min.time())  # Converts to datetime at 00:00:00
+        to_datetime = datetime.combine(self.to_date, datetime.max.time())
+
+        total_tasks = self.env['project.task'].sudo().search([
+            ('employee_id', '=', self.employee_id.id),
+            ('start_date', '>=', from_datetime),
+            ('end_date', '<=', to_datetime)
         ])
         for kpi in self.key_perfomance_ids:
-            kpi_tasks = self.env['project.task'].search([
+            kpi_tasks = self.env['project.task'].sudo().search([
                 ('employee_id', '=', self.employee_id.id),
-                ('kra_check', '=', kpi.id)
+                ('kra_check', '=', kpi.id),
+                ('start_date', '>=', from_datetime),
+                ('end_date', '<=', to_datetime)
             ], order='create_date')
             total_marks_percent = 0
             first_record = None
