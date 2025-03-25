@@ -12,7 +12,7 @@
     'depends':['sm_custom_recruitment_apps'],
 
     'data': [
-        'views/hr_job_case_view.xml',
+        # 'views/hr_job_case_view.xml',
         'views/hr_job_view.xml',
         # 'views/project_project.xml',
         # 'views/default_project_users.xml',

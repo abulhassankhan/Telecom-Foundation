@@ -1,5 +1,6 @@
 from odoo import fields, api, models
 from odoo.exceptions import ValidationError
+from datetime import datetime
 
 class ProjectTaskExecutiveAppraisal(models.Model):
     _inherit = 'project.task.executive.appraisal'
@@ -65,14 +66,22 @@ class ProjectTaskExecutiveAppraisal(models.Model):
                 ])
                 if employee_kra:
                     kpi_ids = employee_kra.kra_question_ids
+                    
+                    from_datetime = datetime.combine(self.from_date, datetime.min.time())  # Converts to datetime at 00:00:00
+                    to_datetime = datetime.combine(self.to_date, datetime.min.time())
+                    
                     total_tasks = self.env['project.task'].sudo().search([
-                        ('employee_id', '=', self.employee_id.id)
+                        ('employee_id', '=', self.employee_id.id),
+                        ('start_date', '>=', from_datetime),
+                        ('end_date', '<=', to_datetime)
                     ])
                     print(len(total_tasks), 'total_tasks')
                     for kpi in kpi_ids:
                         kpi_tasks = self.env['project.task'].sudo().search([
                             ('employee_id', '=', self.employee_id.id),
-                            ('kra_check', '=', kpi.id)
+                            ('kra_check', '=', kpi.id),
+                            ('start_date', '>=', from_datetime),
+                            ('end_date', '<=', to_datetime)
                         ])
                         if len(kpi_tasks) > 0:
                             total_marks_percent = 0

@@ -7,15 +7,15 @@
             <field name="model">hr.job</field>
             <field name="inherit_id" ref="sm_custom_recruitment_apps.hr_job_form_view_inherit"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='user_id']" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </xpath>
-                <xpath expr="//field[@name='job_case_id']" position="attributes">
-                    <attribute name="readonly">1</attribute>
-                </xpath>
-<!--                <xpath expr="//field[@name='job_case_id']" position="replace">-->
-<!--                    <field name="job_case_id" options="{'no_create': True}" attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}" />-->
+<!--                <xpath expr="//field[@name='user_id']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
 <!--                </xpath>-->
+<!--                <xpath expr="//field[@name='job_case_id']" position="attributes">-->
+<!--                    <attribute name="readonly">1</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='job_case_id']" position="replace">
+                    <field name="job_case_id" options="{'no_create': True}" attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}" />
+                </xpath>
             </field>
         </record>
 

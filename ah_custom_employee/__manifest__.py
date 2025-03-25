@@ -15,9 +15,5 @@
         'views/hr_employee.xml',
         'views/hr_contract.xml',
         'views/hr_payroll_structure.xml',
-        # 'views/default_project_users.xml',
-        # 'views/pms_report_view.xml',
-        #
-        # 'security/ir.model.access.csv'
     ],
 }
