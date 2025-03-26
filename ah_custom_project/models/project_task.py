@@ -95,13 +95,13 @@ class ProjectTask(models.Model):
     def ondelete_project_task(self):
         for rec in self:
         # raise ValidationError('You cannot delete this task')
-            if rec.create_user_id != self.env.user:
+            if rec.create_uid != self.env.user:
                 raise ValidationError('You cannot delete this task')
 
     @api.constrains('active')
     def onarchive_project_task(self):
         for rec in self:
-            if rec.active != True and rec.create_user_id != self.env.user:
+            if rec.active != True and rec.create_uid != self.env.user:
                 raise ValidationError('You cannot archive this task')
 
     @api.depends('start_date', 'end_date', 'stage_id')

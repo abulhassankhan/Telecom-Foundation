@@ -15,6 +15,7 @@
         'data/groups.xml',
 
         'security/ir.model.access.csv',
+        'security/kpi_security.xml',
 
         'views/project_task.xml',
         'views/project_project.xml',

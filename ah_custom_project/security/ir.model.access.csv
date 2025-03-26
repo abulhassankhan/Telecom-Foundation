@@ -3,3 +3,6 @@ access_project_default_users,project.default.users,model_project_default_users,b
 
 access_pms_report,pms.report,model_pms_report,ah_custom_project.group_project_acr_report,1,1,1,1
 access_pms_report_lines,pms.report.lines,model_pms_report_lines,ah_custom_project.group_project_acr_report,1,1,1,1
+
+access_project_project,project.project,model_project_project,bn_project_access_right.group_pmo_manager,1,1,1,1
+
