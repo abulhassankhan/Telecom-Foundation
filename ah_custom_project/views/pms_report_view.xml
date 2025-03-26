@@ -6,7 +6,7 @@
             <field name="name">ah.pms.report.view.tree</field>
             <field name="model">pms.report</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree default_order="create_date desc">
                     <field name="employee_id"/>
                     <field name="kpi_type_id"/>
 <!--                    <field name="key_perfomance_ids"/>-->

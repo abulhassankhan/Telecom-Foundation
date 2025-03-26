@@ -7,14 +7,27 @@ class PmsReport(models.Model):
     _name = 'pms.report'
     _rec_name = 'employee_id'
 
+    def _get_kra_type_particular_department(self):
+        user = self.env.user
+        if user.has_group('bn_project_access_right.group_pmo_admin'):
+            return "[]"
+        elif user.has_group('hr.group_hr_manager'):
+            return "[]"
+        elif user.has_group('bn_project_access_right.group_pmo_manager'):
+            employee_id = self.env.user.employee_id
+            department_id = employee_id.department_id
+            kra_type = self.env['kra.type'].sudo().search([('hr_department', '=', department_id.id)])
+            return [('id', '=', kra_type.id)]
+
     from_date = fields.Date('From Date')
     to_date = fields.Date('To Date')
-    kpi_type_id = fields.Many2one('kra.type', 'Department')
+    kpi_type_id = fields.Many2one('kra.type', 'Department', domain=_get_kra_type_particular_department)
     # kpi_ids = fields.Many2one('employee.kra.question', 'KPI')
     key_perfomance_ids = fields.Many2many('employee.kra.question', string='KPIs')
     employee_id = fields.Many2one('hr.employee', 'Employee')
     department_id = fields.Many2one('hr.department', 'Hr Department')
     pms_report_lines = fields.One2many('pms.report.lines', 'pms_report_id')
+
 
 
     @api.onchange('kpi_type_id')

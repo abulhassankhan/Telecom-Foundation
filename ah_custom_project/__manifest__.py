@@ -16,6 +16,7 @@
 
         'security/ir.model.access.csv',
         'security/kpi_security.xml',
+        'security/acr_report.xml',
 
         'views/project_task.xml',
         'views/project_project.xml',
