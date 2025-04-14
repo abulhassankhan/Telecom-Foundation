@@ -13,6 +13,12 @@
                 <xpath expr="//field[@name='kra_type_ids']" position="replace">
                     <field name="kra_type_ids"/>
                 </xpath>
+                <xpath expr="//field[@name='status']" position="after">
+                    <field name="project_owner_id"/>
+                </xpath>
+<!--               <xpath expr="//page[@name='description']" position="inside">-->
+<!--                   <field name="description" options="{'resizable': false}" placeholder="Project description..." readonly="False"/>-->
+<!--               </xpath>-->
             </field>
         </record>
 
@@ -46,6 +52,21 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
             </field>
+        </record>
+
+         <record id="ah_project_project_view_search_inherit" model="ir.ui.view">
+            <field name="name">ah.project.project.view.search.inherit</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project_project_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='groupby_stage']" position="after">
+                    <filter string="Department" name="groupby_department" context="{'group_by': 'kra_type_ids'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="project.open_view_project_all_group_stage" model="ir.actions.act_window">
+            <field name="context">{'search_default_groupby_department': 1}</field>
         </record>
 
 <!--        <record id="ah_employee_own_project_project" model="ir.rule">-->

@@ -12,6 +12,7 @@ class ProjectProject(models.Model):
     user_ids = fields.Many2many('res.users', string='Users', default=_get_default_user_ids, relation='project_user_rel')
     progress_count = fields.Float('Progress Count', compute='_compute_progress_count')
     task_weightage_count = fields.Float('Task Weightage Count', compute='_compute_task_weightage_count')
+    project_owner_id = fields.Many2one('hr.employee', 'Project Owner')
 
     def _compute_progress_count(self):
         for rec in self:
