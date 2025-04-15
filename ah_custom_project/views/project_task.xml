@@ -22,7 +22,7 @@
             <field name="inherit_id" ref="sm_custom_project_apps.project_task_view_tree_inherit"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='kra_check']" position="after">
-                    <field name="priority_check"/>
+                    <field name="presidents_priority"/>
                 </xpath>
                 <xpath expr="//field[@name='priority'][2]" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -71,6 +71,9 @@
                 </xpath>
                 <xpath expr="//field[@name='remarks']" position="attributes">
                     <attribute name="attrs">{'readonly': [('active_employee', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='priority_check']" position="replace">
+                    <field name="presidents_priority" attrs="{'readonly': [('active_employee', '=', True)]}"/>
                 </xpath>
             </field>
         </record>

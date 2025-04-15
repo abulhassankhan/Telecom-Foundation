@@ -16,6 +16,8 @@ class ProjectTask(models.Model):
     parent_task_id = fields.Many2one('project.task', 'Task', related='parent_id')
     show_user_ids = fields.Many2many('res.users', string='Users', default=_get_default_user_ids)
     is_readonly = fields.Boolean(compute='_compute_is_readonly', string='Is Read-Only')
+    presidents_priority = fields.Boolean(string="P&CEO Priority")
+
 
     @api.depends('user_id')
     def _compute_is_readonly(self):
