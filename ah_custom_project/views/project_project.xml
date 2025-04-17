@@ -13,8 +13,12 @@
                 <xpath expr="//field[@name='kra_type_ids']" position="replace">
                     <field name="kra_type_ids"/>
                 </xpath>
-                <xpath expr="//field[@name='status']" position="after">
-                    <field name="project_owner_id"/>
+                <xpath expr="//field[@name='status']" position="before">
+                    <field name="project_owner_id" domain="[('department_id', '=', department_id)]" options="{'no_create': True, 'no_create_edit': True}" required="1"/>
+                </xpath>
+                 <xpath expr="//field[@name='manager']" position="attributes">
+                     <attribute name="readonly">1</attribute>
+                     <attribute name="force_save">1</attribute>
                 </xpath>
 <!--               <xpath expr="//page[@name='description']" position="inside">-->
 <!--                   <field name="description" options="{'resizable': false}" placeholder="Project description..." readonly="False"/>-->

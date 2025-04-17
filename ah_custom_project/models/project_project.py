@@ -13,6 +13,7 @@ class ProjectProject(models.Model):
     progress_count = fields.Float('Progress Count', compute='_compute_progress_count')
     task_weightage_count = fields.Float('Task Weightage Count', compute='_compute_task_weightage_count')
     project_owner_id = fields.Many2one('hr.employee', 'Project Owner')
+    description = fields.Html(help="Description to provide more information and context about this project")
 
     def _compute_progress_count(self):
         for rec in self:
@@ -46,6 +47,8 @@ class ProjectProject(models.Model):
         if self.kra_type_ids:
             hod = self.kra_type_ids.hr_department.manager_id
             self.manager = hod.id
+            self.project_owner_id = hod.id
+            self.department_id = self.kra_type_ids.hr_department.id
 
 
 

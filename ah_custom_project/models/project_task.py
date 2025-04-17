@@ -18,6 +18,8 @@ class ProjectTask(models.Model):
     is_readonly = fields.Boolean(compute='_compute_is_readonly', string='Is Read-Only')
     priority_check = fields.Selection(selection=[('high', 'High'), ('medium', 'Medium'), ('low', 'Low')], string="Priority", required=False)
     presidents_priority = fields.Boolean(string="P&CEO Priority")
+    end_date = fields.Datetime(string="End Date", tracking=True, required=True)
+
 
 
     @api.depends('user_id')
